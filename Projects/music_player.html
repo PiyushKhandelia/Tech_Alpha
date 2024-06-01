@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Player</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
         * {
             padding: 0;
@@ -16,9 +18,10 @@
             font-family: Arial, Helvetica, sans-serif;
             font-weight: bold;
             background-color: gray;
-        }       
+        }
 
         .player {
+            margin-top: 25px;
             height: 95vh;
             display: flex;
             align-items: center;
@@ -33,7 +36,6 @@
             background-color: #ddd;
             box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
             background: transparent;
-            /* opacity: .9; */
         }
 
         .details {
@@ -51,12 +53,7 @@
             background-size: cover;
             background-position: center;
             border-radius: 50%;
-            -moz-box-shadow: 0px 6px 5px black;
-            -webkit-box-shadow: 0px 6px 5px black;
             box-shadow: 0px 6px 5px black;
-            -moz-border-radius: 190px;
-            -webkit-border-radius: 190px;
-            border-radius: 190px;
         }
 
         .now-playing {
@@ -72,44 +69,51 @@
             font-size: 1.5rem;
         }
 
-        .buttons {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .active {
-            color: black;
-        }
-
-        .repeat-track, .random-track, .playpause-track, .prev-track, .next-track {
-            padding: 25px;
-            opacity: 0.8;
-            transition: opacity .2s;
-        }
-
-        .repeat-track:hover, .random-track:hover, .playpause-track:hover, .prev-track:hover, .next-track:hover {
-            opacity: 1.0;
-        }
-
         .slider_container {
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
         }
 
-        .seek_slider, .volume_slider {
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .buttons .prev-track,
+        .buttons .playpause-track,
+        .buttons .next-track {
+            margin: 0 10px;
+        }
+
+        .buttons i {
+            cursor: pointer;
+        }
+
+        .playpause-track {
+            width: 60px;
+        }
+
+        .buttons i:hover {
+            opacity: 0.7;
+        }
+
+        .seek_slider,
+        .volume_slider {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
             height: 5px;
             background: #83A9FF;
-            -webkit-transition: .2s;
             transition: opacity .2s;
         }
 
-        .seek_slider::-webkit-slider-thumb, .volume_slider::-webkit-slider-thumb {
+        .seek_slider::-webkit-slider-thumb,
+        .volume_slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
@@ -121,7 +125,8 @@
             border-radius: 100%;
         }
 
-        .seek_slider:hover, .volume_slider:hover {
+        .seek_slider:hover,
+        .volume_slider:hover {
             opacity: 1.0;
         }
 
@@ -133,17 +138,15 @@
             width: 30%;
         }
 
-        .current-time, .total-duration {
+        .current-time,
+        .total-duration {
             padding: 10px;
         }
 
-        i.fa-volume-down, i.fa-volume-up {
+        i.fa-volume-down,
+        i.fa-volume-up {
             padding: 10px;
         }
-
-        i, i.fa-play-circle, i.fa-pause-circle, i.fa-step-forward, i.fa-step-backward, p {
-            cursor: pointer;
-        }   
 
         .randomActive {
             color: black;
@@ -151,6 +154,14 @@
 
         .rotate {
             animation: rotation 8s infinite linear;
+        }
+
+        .playpause-track i.fa-play-circle {
+            display: block;
+        }
+
+        .playpause-track i.fa-pause-circle {
+            display: none;
         }
 
         @keyframes rotation {
@@ -229,37 +240,32 @@
                 <div class="track-name">Track Name</div>
                 <div class="track-artist">Track Artist</div>
             </div>
-    
+
             <div class="slider_container">
                 <div class="current-time">00:00</div>
                 <input class="seek_slider" type="range" min="0" max="100" value="0" step="1">
                 <div class="total-duration">00:00</div>
             </div>
-    
+
             <div class="slider_container">
                 <i class="fa fa-volume-down"></i>
                 <input class="volume_slider" type="range" min="0" max="100" value="100" step="1">
                 <i class="fa fa-volume-up"></i>
             </div>
-    
+
             <div class="buttons">
-                <div class="random-track">
-                    <i class="fas fa-random fa-2x" title="random"></i>
-                </div>
                 <div class="prev-track">
                     <i class="fa fa-step-backward fa-2x"></i>
                 </div>
                 <div class="playpause-track">
-                    <i class="fa fa-play-circle fa-5x"></i>
+                    <i id="play-pause" class="fa fa-play-circle fa-3x"></i>
+                    <i id="play-pause" class="fa fa-pause-circle fa-3x" style="display: none;"></i>
                 </div>
                 <div class="next-track">
                     <i class="fa fa-step-forward fa-2x"></i>
                 </div>
-                <div class="repeat-track">
-                    <i class="fa fa-repeat fa-2x" title="repeat"></i>
-                </div>
             </div>
-    
+
             <div id="wave">
                 <span class="stroke"></span>
                 <span class="stroke"></span>
@@ -271,74 +277,134 @@
             </div>
         </div>
     </div>
+    <audio id="audio-player"></audio>
     <script>
-        let now_playing = document.querySelector('.now-playing');
-        let track_art = document.querySelector('.track-art');
-        let track_name = document.querySelector('.track-name');
-        let track_artist = document.querySelector('.track-artist');
-
-        let playpause_btn = document.querySelector('.playpause-track');
-        let next_btn = document.querySelector('.next-track');
-        let prev_btn = document.querySelector('.prev-track');
-
-        let seek_slider = document.querySelector('.seek_slider');
-        let volume_slider = document.querySelector('.volume_slider');
-        let curr_time = document.querySelector('.current-time');
-        let total_duration = document.querySelector('.total-duration');
-        let wave = document.getElementById('wave');
-        let randomIcon = document.querySelector('.random-track');
-        let curr_track = new Audio();
-
-        let track_index = 0;
         let isPlaying = false;
-        let isRandom = false;
-        let updateTimer;
+        let currentTrack = 0;
+        let repeatMode = 'none'; // 'none', 'one', 'all'
+        let shuffledPlaylist = []; // Array to hold shuffled playlist
+        let isShuffled = false;
 
         const music_list = [
             {
-                img : 'https://i.ytimg.com/vi/h3h035Eyz5A/maxresdefault.jpg',
-                name : 'Unstoppable',
-                artist : 'by Sia',
-                music : 'https://piyushkhandelia.github.io/Tech_Alpha/music/unstoppable.mp3'
+                img: 'https://i.ytimg.com/vi/h3h035Eyz5A/maxresdefault.jpg',
+                name: 'Unstoppable',
+                artist: 'by Sia',
+                music: 'https://piyushkhandelia.github.io/Tech_Alpha/music/unstoppable.mp3'
             },
             {
-                img : 'https://c.saavncdn.com/472/Wild-English-2016-20190417010158-500x500.jpg',
-                name : 'Born to Drive',
-                artist : 'Angie K   ',
-                music : 'https://piyushkhandelia.github.io/Tech_Alpha/music/born-to-drive.mp3'
+                img: 'https://c.saavncdn.com/472/Wild-English-2016-20190417010158-500x500.jpg',
+                name: 'Born to Drive',
+                artist: 'Angie K',
+                music: 'https://piyushkhandelia.github.io/Tech_Alpha/music/born-to-drive.mp3'
             },
             {
-                img : 'https://example.com/images/restart.jpg',
-                name : 'Restart',
-                artist : 'by Shaan, Swanand Kirkire',
-                music : 'https://piyushkhandelia.github.io/Tech_Alpha/music/restart.mp3'
+                img: 'https://i.ytimg.com/vi/P2r7LoytBfo/maxresdefault.jpg',
+                name: 'Lakdi ki Kaati',
+                artist: 'Jingle Toons',
+                music: 'https://piyushkhandelia.github.io/Tech_Alpha/music/Lakdi_ki_kathi.mp3'
             },
-            {
-                img : 'https://example.com/images/bandeya.jpg',
-                name : 'Bandeya re Bandeya',
-                artist : 'by Arijit Singh, Asees Kaur',
-                music : 'https:'
-            }
+            // Add other tracks here
         ];
 
-        loadTrack(track_index);
+        function loadTrack(trackIndex) {
+            const track = isShuffled ? shuffledPlaylist[trackIndex] : music_list[trackIndex];
+            const audio = document.getElementById('audio-player');
+            audio.src = track.music;
+            document.querySelector('.track-art').style.backgroundImage = `url(${track.img})`;
+            document.querySelector('.track-name').textContent = track.name;
+            document.querySelector('.track-artist').textContent = track.artist;
+            document.querySelector('.now-playing').textContent = `PLAYING ${trackIndex + 1} OF ${music_list.length}`;
+            resetValues();
+        }
 
-        function loadTrack(track_index){
-            clearInterval(updateTimer);
-            reset();
+        function playTrack() {
+            const audio = document.getElementById('audio-player');
+            audio.play();
+            isPlaying = true;
+            document.querySelector('.playpause-track i.fa-play-circle').style.display = 'none';
+            document.querySelector('.playpause-track i.fa-pause-circle').style.display = 'block';
+            document.querySelector('.track-art').classList.add('rotate');
+            document.getElementById('wave').classList.add('loader');
+        }
 
-            curr_track.src = music_list[track_index].music;
-            curr_track.load();
+        function pauseTrack() {
+            const audio = document.getElementById('audio-player');
+            audio.pause();
+            isPlaying = false;
+            document.querySelector('.playpause-track i.fa-play-circle').style.display = 'block';
+            document.querySelector('.playpause-track i.fa-pause-circle').style.display = 'none';
+            document.querySelector('.track-art').classList.remove('rotate');
+            document.getElementById('wave').classList.remove('loader');
+        }
 
-            track_art.style.backgroundImage = "url(" + music_list[track_index].img + ")";
-            track_name.textContent = music_list[track_index].name;
-            track_artist.textContent = music_list[track_index].artist;
-            now_playing.textContent = "Playing music " + (track_index + 1) + " of " + music_list.length;
+        function playPauseTrack() {
+            isPlaying ? pauseTrack() : playTrack();
+        }
 
-            updateTimer = setInterval(setUpdate, 1000);
+        function nextTrack() {
+            if (repeatMode === 'one') {
+                loadTrack(currentTrack);
+                playTrack();
+            } else if (repeatMode === 'all') {
+                currentTrack = (currentTrack + 1) % music_list.length;
+                loadTrack(currentTrack);
+                playTrack();
+            } else {
+                if (currentTrack < music_list.length - 1) {
+                    currentTrack += 1;
+                    loadTrack(currentTrack);
+                    playTrack();
+                }
+            }
+        }
 
-            curr_track.addEventListener('ended', nextTrack);
-            random_bg_color();
+        function prevTrack() {
+            if (currentTrack > 0) {
+                currentTrack -= 1;
+                loadTrack(currentTrack);
+                playTrack();
+            }
+        }
+
+        function resetValues() {
+            document.querySelector('.current-time').textContent = '00:00';
+            document.querySelector('.total-duration').textContent = '00:00';
+            document.querySelector('.seek_slider').value = 0;
+        }
+
+        document.querySelector('.playpause-track').addEventListener('click', playPauseTrack);
+        document.querySelector('.next-track').addEventListener('click', nextTrack);
+        document.querySelector('.prev-track').addEventListener('click', prevTrack);
+
+        document.getElementById('audio-player').addEventListener('timeupdate', (event) => {
+            const audio = event.target;
+            const currentTime = audio.currentTime;
+            const duration = audio.duration;
+            const seekSlider = document.querySelector('.seek_slider');
+            seekSlider.value = (currentTime / duration) * 100;
+            document.querySelector('.current-time').textContent = formatTime(currentTime);
+            document.querySelector('.total-duration').textContent = formatTime(duration);
+        });
+
+        document.querySelector('.seek_slider').addEventListener('input', (event) => {
+            const seekSlider = event.target;
+            const audio = document.getElementById('audio-player');
+            audio.currentTime = (seekSlider.value / 100) * audio.duration;
+        });
+
+        document.querySelector('.volume_slider').addEventListener('input', (event) => {
+            const volumeSlider = event.target;
+            const audio = document.getElementById('audio-player');
+            audio.volume = volumeSlider.value / 100;
+        });
+
+        document.getElementById('audio-player').addEventListener('ended', nextTrack);
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secondsLeft = Math.floor(seconds - minutes * 60);
+            return `${minutes}:${secondsLeft < 10 ? '0' : ''}${secondsLeft}`;
         }
 
         function random_bg_color(){
@@ -359,99 +425,12 @@
 
             let gradient = 'linear-gradient(' + angle + ',' + Color1 + ', ' + Color2 + ")";
             document.body.style.background = gradient;
-        }
+        }       
 
-        function reset(){
-            curr_time.textContent = "00:00";
-            total_duration.textContent = "00:00";
-            seek_slider.value = 0;
-        }
-
-        function randomTrack(){
-            if (isPlaying) {
-                isRandom ? pauseRandom() : playRandom();
-            }
-        }
-
-        function playRandom(){
-            isRandom = true;
-            randomIcon.classList.add('randomActive');
-        }
-
-        function pauseRandom(){
-            isRandom = false;
-            randomIcon.classList.remove('randomActive');
-        }
-
-        function repeatTrack(){
-            let current_index = track_index;
-            loadTrack(current_index);
-            playTrack();
-        }
-
-        function playpauseTrack(){
-            if (curr_track.readyState > 0) {
-                isPlaying ? pauseTrack() : playTrack();
-            }
-        }
-
-        function playTrack(){
-            curr_track.play();
-            isPlaying = true;
-            track_art.classList.add('rotate');
-            wave.classList.add('loader');
-            playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
-        }
-
-        function pauseTrack(){
-            curr_track.pause();
-            isPlaying = false;
-            track_art.classList.remove('rotate');
-            wave.classList.remove('loader');
-            playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
-        }
-
-        function nextTrack(){
-            track_index = (track_index + 1) % music_list.length;
-            loadTrack(track_index);
-            playTrack();
-        }
-
-        function prevTrack(){
-            track_index = (track_index - 1 + music_list.length) % music_list.length;
-            loadTrack(track_index);
-            playTrack();
-        }
-
-        function seekTo(){
-            let seekto = curr_track.duration * (seek_slider.value / 100);
-            curr_track.currentTime = seekto;
-        }
-
-        function setVolume(){
-            curr_track.volume = volume_slider.value / 100;
-        }
-
-        function setUpdate(){
-            let seekPosition = 0;
-            if(!isNaN(curr_track.duration)){
-                seekPosition = curr_track.currentTime * (100 / curr_track.duration);
-                seek_slider.value = seekPosition;
-
-                let currentMinutes = Math.floor(curr_track.currentTime / 60);
-                let currentSeconds = Math.floor(curr_track.currentTime - currentMinutes * 60);
-                let durationMinutes = Math.floor(curr_track.duration / 60);
-                let durationSeconds = Math.floor(curr_track.duration - durationMinutes * 60);
-
-                if(currentSeconds < 10) {currentSeconds = "0" + currentSeconds; }
-                if(durationSeconds < 10) { durationSeconds = "0" + durationSeconds; }
-                if(currentMinutes < 10) {currentMinutes = "0" + currentMinutes; }
-                if(durationMinutes < 10) { durationMinutes = "0" + durationMinutes; }
-
-                curr_time.textContent = currentMinutes + ":" + currentSeconds;
-                total_duration.textContent = durationMinutes + ":" + durationSeconds;
-            }
-        }
+        window.onload = () => {
+            random_bg_color(); // Call function to set random background color when the page loads
+            loadTrack(currentTrack);
+        };
     </script>
 </body>
 </html>
